@@ -1,107 +1,160 @@
-# TypeScript Boilerplate
+# README: API Minimalista de Fórmula 1
 
-Um boilerplate inicial para projetos em TypeScript, projetado para fornecer uma base robusta e escalável para seus projetos.
+## Visão Geral
 
-## Recursos
+Este projeto é uma API minimalista desenvolvida com [Fastify](https://www.fastify.io/). Ela fornece informações sobre equipes e pilotos de Fórmula 1. A API é projetada para ser leve e simples, sendo ideal para projetos relacionados a dados de Fórmula 1.
 
-- **TypeScript**: Linguagem com tipagem estática para JavaScript.
-- **Configuração Inicial do TypeScript**: Configurações otimizadas no arquivo `tsconfig.json`.
-- **ESLint**: Linter para manter a consistência e qualidade do código.
-- **Prettier**: Formatação automática do código.
-- **Scripts Pré-Configurados**: Scripts para compilação, linting e formatação.
-- **Estrutura de Pastas Organizada**: Melhor gestão do código.
+---
 
-## Estrutura de Pastas
+## Funcionalidades
 
-```
-.
-├── src
-│   ├── index.ts
-│   └── modules
-├── dist
-├── .eslintrc.json
-├── .prettierrc
-├── tsconfig.json
-├── package.json
-└── README.md
-```
+- **Endpoints para Equipes e Pilotos**:
+  - Obtenha uma lista de todas as equipes.
+  - Obtenha uma lista de todos os pilotos.
+  - Busque detalhes de um piloto específico pelo ID.
+- **Suporte a CORS**: Permite requisições de qualquer domínio.
+- **Integração com Fastify**: Otimizada para desempenho e simplicidade.
 
-- **src**: Contém os arquivos fonte do projeto.
-- **dist**: Contém os arquivos compilados.
+---
 
 ## Instalação
 
-1. Clone este repositório:
+1. Clone o repositório:
    ```bash
-   git clone https://github.com/Erickjake/BoilerPlate-Typescript-
+   git clone <repository-url>
+   cd <repository-folder>
    ```
 
-2. Acesse o diretório do projeto:
-   ```bash
-   cd typescript-boilerplate
-   ```
-
-3. Instale as dependências:
+2. Instale as dependências:
    ```bash
    npm install
    ```
 
+---
+
 ## Uso
 
-- **Desenvolvimento**:
-  ```bash
-  npm run dev
-  ```
+### Inicie o Servidor
 
-- **Compilar para Produção**:
-  ```bash
-  npm run build
-  ```
+Execute o seguinte comando para iniciar o servidor:
+```bash
+npm start
+```
 
-- **Lint**:
-  ```bash
-  npm run lint
-  ```
+O servidor será executado em `http://localhost:3000`.
 
-- **Formatar Código**:
-  ```bash
-  npm run format
-  ```
+---
 
-## Configuração
+## Endpoints
 
-### tsconfig.json
+### 1. Obter Todas as Equipes
+- **URL**: `/teams`
+- **Método**: `GET`
+- **Resposta**: JSON contendo uma lista de todas as equipes de Fórmula 1.
 
-O arquivo `tsconfig.json` é configurado para um bom equilíbrio entre desempenho e recursos. Altere conforme necessário para o seu projeto.
+#### Exemplo de Resposta:
+```json
+{
+  "teams": [
+    {
+      "id": 1,
+      "name": "Red Bull Racing",
+      "base": "Milton Keynes",
+      "teamChief": "Christian Horner",
+      "technicalChief": "Adrian Newey",
+      "powerUnit": "Honda",
+      "firstEntry": 2005,
+      "worldChampionships": 4,
+      "highestRaceFinish": "1 (x73)",
+      "polePositions": 64
+    },
+    ...
+  ]
+}
+```
 
-### ESLint
+---
 
-As regras do ESLint estão definidas em `.eslintrc.json`. Você pode personalizá-las para atender ao estilo de código desejado.
+### 2. Obter Todos os Pilotos
+- **URL**: `/drivers`
+- **Método**: `GET`
+- **Resposta**: JSON contendo uma lista de todos os pilotos de Fórmula 1.
 
-### Prettier
+#### Exemplo de Resposta:
+```json
+{
+  "drivers": [
+    {
+      "id": 1,
+      "name": "Max Verstappen",
+      "team": "Red Bull Racing"
+    },
+    ...
+  ]
+}
+```
 
-O arquivo `.prettierrc` contém as configurações para formatação automática. Personalize-o para suas preferências.
+---
 
-## Contribuição
+### 3. Obter Piloto por ID
+- **URL**: `/drivers/:id`
+- **Método**: `GET`
+- **Parâmetros**:
+  - `id`: O ID do piloto.
+- **Resposta**:
+  - `200 OK`: JSON contendo as informações do piloto.
+  - `404 Not Found`: Mensagem de erro se o ID do piloto não existir.
 
-Contribuições são bem-vindas! Siga os passos abaixo para contribuir:
+#### Exemplo de Resposta (200 OK):
+```json
+{
+  "driver": {
+    "id": 1,
+    "name": "Max Verstappen",
+    "team": "Red Bull Racing"
+  }
+}
+```
 
-1. Fork este repositório.
-2. Crie um branch para sua feature ou correção:
-   ```bash
-   git checkout -b minha-feature
-   ```
-3. Faça as alterações e commit:
-   ```bash
-   git commit -m "Minha feature"
-   ```
-4. Envie para seu fork:
-   ```bash
-   git push origin minha-feature
-   ```
-5. Abra um Pull Request.
+#### Exemplo de Resposta (404 Not Found):
+```json
+{
+  "error": "Driver not found"
+}
+```
+
+---
+
+## Dependências
+
+- **Fastify**: Framework principal para a construção da API.
+- **@fastify/cors**: Habilita CORS na API.
+
+Instale com:
+```bash
+npm install fastify @fastify/cors
+```
+
+---
+
+## Personalização
+
+Para adicionar mais dados ou endpoints:
+1. Modifique os arrays `teams` e `drivers` no código.
+2. Adicione novas rotas na seção `server.get()`.
+
+---
 
 ## Licença
 
-Este projeto é licenciado sob a [MIT License](LICENSE).
+Este projeto está licenciado sob a licença MIT. Sinta-se à vontade para usar, modificar e distribuir conforme necessário.
 
+---
+
+## Contribuição
+
+Contribuições são bem-vindas! Caso tenha ideias ou melhorias, envie um pull request ou abra uma issue.
+
+---
+
+Divirta-se explorando o mundo da Fórmula 1 com esta API minimalista! 🏎️
